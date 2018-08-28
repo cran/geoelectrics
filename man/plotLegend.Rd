@@ -3,8 +3,8 @@
 \docType{methods}
 \name{plotLegend}
 \alias{plotLegend}
-\alias{plotLegend,Profile-method}
 \alias{plotLegend,ProfileSet-method}
+\alias{plotLegend,Profile-method}
 \title{Plots Legend}
 \usage{
 plotLegend(.Object, legend.lab = expression(paste("Resistivity [", Omega,
@@ -16,7 +16,8 @@ plotLegend(.Object, legend.lab = expression(paste("Resistivity [", Omega,
   minData = .Object@minData, maxData = .Object@maxData)
 
 \S4method{plotLegend}{Profile}(.Object, legend.lab,
-  minData = .Object@xyzData@minData, maxData = .Object@xyzData@maxData)
+  minData = .Object@processedData@minData,
+  maxData = .Object@processedData@maxData)
 }
 \arguments{
 \item{.Object}{either a single Profile or a ProfileSet.}
@@ -27,11 +28,11 @@ plotLegend(.Object, legend.lab = expression(paste("Resistivity [", Omega,
 
 \item{maxData}{maximum value.}
 
-\item{breaks}{Break points in sorted order to indicate the intervals for assigning the colors. 
-Note that if there are nlevel colors there should be (nlevel+1) breakpoints. 
+\item{breaks}{Break points in sorted order to indicate the intervals for assigning the colors.
+Note that if there are nlevel colors there should be (nlevel+1) breakpoints.
 If breaks is not specified (nlevel+1) equally spaced breaks are created where the first and last bin have their midpoints at the minimum and maximum values in z or at zlim.}
 
-\item{legend.line}{distance in units of character height (as in mtext) of the legend label from the color bar. 
+\item{legend.line}{distance in units of character height (as in mtext) of the legend label from the color bar.
 Make this larger if the label collides with the color axis labels.}
 
 \item{nlevel}{number of color levels.}
@@ -54,18 +55,17 @@ For linear scale: function(x) x.}
 Plots the legend for resistivity values.
 }
 \examples{
-# data(sinkhole)
+data(sinkhole)
 
-# plotLegend(sinkhole)
+plotLegend(sinkhole)
 
 # for linear scale:
-# plotLegend(sinkhole@profiles[[1]], 
-#            trafo=function(x) x, 
-#            backtrafo=function(x) x,
-#            minData=100, maxData=50000)
+plotLegend(sinkhole@profiles[[1]],
+           trafo=function(x) x,
+           backtrafo=function(x) x,
+           minData=100, maxData=50000)
 }
 \seealso{
 \code{\link{Profile-class}}, \code{\link{ProfileSet-class}},
-\code{\link{plot3dXyz}},
+\code{\link{plot3d}},
 }
-
