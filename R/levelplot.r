@@ -13,6 +13,7 @@
 #' @param breaks number of color breaks.
 #' @param trafo transformation to be done on data (default: log).
 #' @param backtrafo back transformation to plot correct labels (default: exp).
+#' @param aspect the y/x aspect ratio (default: iso).
 #' @param ... lattice levelplot arguments.
 #' @rdname levelplot
 #' @aliases levelplot
@@ -45,16 +46,50 @@ setMethod('levelplot', signature('Profile', 'ANY'),
                    breaks = 18,
                    trafo = log,
                    backtrafo = exp,
+                   aspect = "iso",
                    ...) {
             if (dataType == 'processed') {
               if (withTopo) {
-                levelplotProcessedDataWithTopo(x, xlab, ylab, main, col, breaks, trafo, backtrafo, ...)
+                levelplotProcessedDataWithTopo(x, xlab, ylab, main, col, breaks, trafo, backtrafo, aspect, ...)
               } else {
-                levelplotProcessedData(x, xlab, ylab, main, col, breaks, trafo, backtrafo, ...)
+                levelplotProcessedData(x, xlab, ylab, main, col, breaks, trafo, backtrafo, aspect, ...)
               }
             } else {
-              levelplotRawData(x, xlab, ylab, main, col, trafo, ...)
+              levelplotRawData(x, xlab, ylab, main, col, trafo, aspect, ...)
             }
+          })
+
+#' @rdname levelplot
+#' @aliases levelplot
+#' @export
+setMethod('levelplot', signature(x = 'ProfileSet'),
+          function(x,
+                   dataType = 'processed',
+                   withTopo = FALSE,
+                   xlab = 'Length [m]',
+                   ylab = 'Depth [m]',
+                   main = paste(x@title),
+                   col = colors,
+                   breaks = 18,
+                   trafo = log,
+                   backtrafo = exp,
+                   aspect = "iso",
+                   ...) {
+            lapply(
+              x@profiles,
+              levelplot,
+              dataType = dataType,
+              withTopo = withTopo,
+              xlab = xlab,
+              ylab = ylab,
+              main = main,
+              col = col,
+              breaks = breaks,
+              trafo = trafo,
+              backtrafo = backtrafo,
+              aspect = aspect,
+              ...
+            )
           })
 
 #' Levelplot Legend Label

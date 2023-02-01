@@ -45,6 +45,7 @@ setMethod('plot3d', signature(x = 'ProfileSet'),
               maxData = maxData,
               col = col,
               trafo = trafo,
+              psize = psize,
               ...
             )
             title3d(title, sub, xlab, ylab, zlab)
@@ -88,21 +89,21 @@ setMethod('plot3d', signature(x = 'Profile'),
             y <- m * dx + n
             
             # plot 3D
-            rgl.bg(color = 'white')
+            bg3d(color = 'white')
             points3d(
               y,
               x@processedData@pointsWithTopo$height,
               dx,
               color = colorAssignment,
-              size = pointsize,
+              size = psize,
               ...
             )
-            rgl.bbox()
-            rgl.texts(
+            bbox3d()
+            text3d(
               y[1],
               x@processedData@pointsWithTopo$height[1] + 20,
               dx[1],
-              text = paste(x@title),
+              texts = paste(x@title),
               cex = 1,
               color = 'black'
             )
